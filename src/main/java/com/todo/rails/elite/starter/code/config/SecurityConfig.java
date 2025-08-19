@@ -104,28 +104,15 @@ public class SecurityConfig {
 		return http
 				.authorizeHttpRequests(
 						auth -> auth
-								// TODO 1: enforce authentication
-								//  permit the /css/** , /js/** , /images/** URLS to all users
 								.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-
-								// TODO 2: make /login and /register publicly accessible
 								.requestMatchers("/login", "/register").permitAll()
-
-								//  permit the /api/tasks/** to all users (NOT RECOMMENDED)
 								.requestMatchers("/api/tasks/**").permitAll()
-
-								//  authenticate all other requests
 								.anyRequest().authenticated()
 				)
 				.formLogin(
 						form -> form
-								// TODO 3: set the /login URL for the login process
 								.loginPage("/login")
-
-								// TODO 4: set the redirect URL to / if login is successful
 								.defaultSuccessUrl("/", true)
-
-								// permit to all users
 								.permitAll()
 				)
 				.logout(

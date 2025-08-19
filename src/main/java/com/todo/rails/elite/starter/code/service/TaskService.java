@@ -4,6 +4,8 @@ import com.todo.rails.elite.starter.code.model.Task;
 import com.todo.rails.elite.starter.code.repository.TaskRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-// TODO 8: reformat code. Use your IDE's formatting tools to ensure consistent indentation and spacing.
-// TODO 9: add method comments. Add method-level comments to explain the purpose and logic of methods.
 @Service
 public class TaskService {
 	private final TaskRepository taskRepository;
 
-	// TODO 16: Log Exceptions. Use SLF4J to log exceptions in the service and controller layers.
+	private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
 	@Autowired
 	public TaskService(TaskRepository taskRepository) {
@@ -32,6 +32,7 @@ public class TaskService {
 	 */
 	public Task addTask(@NotNull(message = "Task cannot be null") Task task) throws RuntimeException {
 		if (taskRepository.findByTitle(task.getTitle()).isPresent()) {
+			logger.error("Task already exists");
 			throw new RuntimeException("Task already exists");
 		}
 		return taskRepository.save(task);
@@ -84,9 +85,9 @@ public class TaskService {
 	 * @throws RuntimeException in the event the task to be updated is not found
 	 */
 	public Task updateTask(@NotNull(message = "Task cannot be null") Task task) throws RuntimeException {
-		// TODO 10: use meaningful names. Rename variables and methods for clarity. Ex - taskByTitle can be refactored to existingTask.
 		Optional<Task> existingTask = taskRepository.findByTitle(task.getTitle());
 		if (existingTask.isEmpty()) {
+			logger.error("Task not found while updating task");
 			throw new RuntimeException("Task not found");
 		}
 		Task taskToUpdate = existingTask.get();
@@ -105,6 +106,7 @@ public class TaskService {
 	public void deleteTask(@NotNull(message = "Task cannot be null") Task task) throws RuntimeException {
 		Optional<Task> existingTask = taskRepository.findByTitle(task.getTitle());
 		if (existingTask.isEmpty()) {
+			logger.error("Task not found while deleting task");
 			throw new RuntimeException("Task not found");
 		}
 		taskRepository.delete(task);

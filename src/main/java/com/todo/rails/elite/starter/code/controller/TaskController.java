@@ -2,6 +2,8 @@ package com.todo.rails.elite.starter.code.controller;
 
 import com.todo.rails.elite.starter.code.model.Task;
 import com.todo.rails.elite.starter.code.service.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 public class TaskController {
 
 	private final TaskService taskService;
+	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
 	@Autowired
 	public TaskController(TaskService taskService) {
@@ -27,6 +30,7 @@ public class TaskController {
 		try {
 			return ResponseEntity.ok(taskService.getAllTasks());
 		} catch (Exception exception) {
+			logger.error("Error in getAllTasks()");
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -36,6 +40,7 @@ public class TaskController {
 		try {
 			return ResponseEntity.ok(taskService.getTaskById(id));
 		} catch (Exception exception) {
+			logger.error("Error in getTaskById()");
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -45,6 +50,7 @@ public class TaskController {
 		try {
 			return ResponseEntity.ok(taskService.getTaskByTitle(title));
 		} catch (Exception exception) {
+			logger.error("Error in getTaskByTitle()");
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -55,6 +61,7 @@ public class TaskController {
 			Task addedTask = taskService.addTask(task);
 			return new ModelAndView("redirect:/tasks");
 		} catch (Exception exception) {
+			logger.error("Error in addTask()");
 			return new ModelAndView("redirect:/tasks/add", "task", task);
 		}
 	}
@@ -73,6 +80,7 @@ public class TaskController {
 			);
 			return new ModelAndView("edit", "task", taskById);
 		} else {
+			logger.error("Error in updateTask()");
 			throw new RuntimeException("Task not found");
 		}
 	}
@@ -83,6 +91,7 @@ public class TaskController {
 			Task updatedTask = taskService.updateTask(task);
 			return new ModelAndView("redirect:/tasks", "task", updatedTask);
 		} catch (Exception exception) {
+			logger.error("Error in POST /update");
 			throw new RuntimeException("Task not found");
 		}
 	}
@@ -95,6 +104,7 @@ public class TaskController {
 			taskService.updateTask(taskById);
 			return new ModelAndView("redirect:/");
 		} catch (Exception exception) {
+			logger.error("Error in POST /complete/{id}");
 			return new ModelAndView("redirect:/");
 		}
 	}
@@ -106,6 +116,7 @@ public class TaskController {
 			taskService.deleteTask(taskById);
 			return new ModelAndView("redirect:/");
 		} catch (Exception exception) {
+			logger.error("Error in DELETE /delete/{id}");
 			return new ModelAndView("redirect:/");
 		}
 	}
@@ -115,6 +126,7 @@ public class TaskController {
 		try {
 			return ResponseEntity.ok(taskService.getPendingTasks());
 		} catch (Exception exception) {
+			logger.error("Error in GET /pending");
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -124,6 +136,7 @@ public class TaskController {
 		try {
 			return ResponseEntity.ok(taskService.getCompletedTasks());
 		} catch (Exception exception) {
+			logger.error("Error in GET /completed");
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -133,6 +146,7 @@ public class TaskController {
 		try {
 			return ResponseEntity.ok(taskService.getTodayTasks());
 		} catch (Exception exception) {
+			logger.error("Error in GET /today");
 			return ResponseEntity.notFound().build();
 		}
 	}

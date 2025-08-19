@@ -17,7 +17,6 @@ public class SecurityUser implements UserDetails {
 		this.user = user;
 	}
 
-	// TODO 6: update the SecurityUser model
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Arrays.stream(user.getRoles().split(","))
