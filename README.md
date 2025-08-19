@@ -25,6 +25,19 @@ This project was developed as part of the **Amazon Junior Software Developer Cou
 
 ---
 
+## 🖼️ Screenshots
+
+### Login Page
+![Login Page](screenshots/Login.png)
+
+### Task List
+![Dashboard](screenshots/Dashboard.png)
+
+### Create Task Form
+![Create Task](screenshots/TaskCreation.png)
+
+---
+
 ## 🛠️ Tech Stack
 - **Backend:** Java, Spring Boot, Spring Security, Hibernate/JPA  
 - **Frontend:** Thymeleaf, JavaScript, HTML, CSS  
@@ -65,7 +78,7 @@ spring.jpa.hibernate.ddl-auto=update
 mvn spring-boot:run
 ```
 
-### 4) Run the App
+### 4. Run the App
 ```bash
 mvn spring-boot:run
 ```
