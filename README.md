@@ -47,6 +47,15 @@ This project was developed as part of the **Amazon Junior Software Developer Cou
 
 ---
 
+## Deployment
+
+This project was deployed on **AWS EC2** for testing purposes.
+Currently, the EC2 instance is **turned off**, so the live demo link is unavailable.
+
+To run the project locally, follow the steps below.
+
+---
+
 ## ✅ Prerequisites
 - Java 17+ (or the version your project targets)
 - Maven 3.8+
